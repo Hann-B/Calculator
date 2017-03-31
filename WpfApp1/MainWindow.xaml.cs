@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,36 +30,68 @@ namespace WpfApp1
         private void AddButton(object sender, RoutedEventArgs e)
         {
             //After two values are entered they are added together and labeld result
-            var result = int.Parse(input1.Text) + int.Parse(input2.Text);
-            OutputSolution.Text = result.ToString();
+            var resultAdd = double.Parse(input1.Text) + double.Parse(input2.Text);
+            OutputSolution.Text = resultAdd.ToString();
         }
 
         private void SubtractButton(object sender, RoutedEventArgs e)
         {
             //After two values are entered they are subtracted and labeld result
-            var result = int.Parse(input1.Text) - int.Parse(input2.Text);
-            OutputSolution.Text = result.ToString();
+            var resultSubtract = double.Parse(input1.Text) - double.Parse(input2.Text);
+            OutputSolution.Text = resultSubtract.ToString();
         }
 
         private void MultiplyButton(object sender, RoutedEventArgs e)
         {
             //After two values are entered they are multiplied and labeld result
-            var result = int.Parse(input1.Text) * int.Parse(input2.Text);
-            OutputSolution.Text = result.ToString();
+            var resultMultiply = double.Parse(input1.Text) * double.Parse(input2.Text);
+            OutputSolution.Text = resultMultiply.ToString();
         }
 
         private void DivideButton(object sender, RoutedEventArgs e)
         {
             //After two values are entered they are divided and labeld result
-            var result = int.Parse(input1.Text) / int.Parse(input2.Text);
-            OutputSolution.Text = result.ToString();
+            var resultDivide = double.Parse(input1.Text) / double.Parse(input2.Text);
+            OutputSolution.Text = resultDivide.ToString();
         }
 
         private void ModButton(object sender, RoutedEventArgs e)
         {
             //After two values are entered they are mod and labeld result
-            var result = int.Parse(input1.Text) % int.Parse(input2.Text);
-            OutputSolution.Text = result.ToString();
+            var resultMod = double.Parse(input1.Text) % double.Parse(input2.Text);
+            OutputSolution.Text = resultMod.ToString();
+         }
+
+        public void StoreMathToFile()
+        {
+            //store calculations to memory
+            var path = "calcMem.txt";
+            using (var writer = new StreamWriter(path))
+            {
+                writer.WriteLine(OutputSolution.Text);
+            }
+        }
+        public void ReadMathFromFile()
+        {
+            var path = "calcMem.txt";
+            using (var reader = new StreamReader(path))
+            {
+                OutputSolution.Text=reader.ReadLine();
+            }
+        }
+        private void MemoryAddButton(object sender, RoutedEventArgs e)
+        {
+            StoreMathToFile();
+        }
+
+        private void MemoryRecallButton(object sender, RoutedEventArgs e)
+        {
+            ReadMathFromFile();
+        }
+
+        private void MemoryClearButton(object sender, RoutedEventArgs e)
+        {
+            File.WriteAllText("calcMem.txt", "");
         }
     }
 }
